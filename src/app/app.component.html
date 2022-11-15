@@ -1,2 +1,24 @@
+<!--<div>Informed</div>-->
 
-app works!
+<div *ngIf="!viewOption">
+  <button (click)="viewOptionClick(1)">View All Surveys</button>
+  <button (click)="viewOptionClick(2)">View All Responses</button>
+  <button (click)="viewOptionClick(3)">Create New Survey</button>
+</div>
+
+<div *ngIf="viewOption">
+  <button (click)="viewAllOptionsClick()">View All Options</button>
+</div>
+
+<div *ngIf="viewOption===1">
+  <app-survey-list></app-survey-list>
+</div>
+
+<div *ngIf="viewOption===2">
+  Viewing All Responses
+</div>
+
+
+<div *ngIf="viewOption===3">
+  <app-create-survey></app-create-survey>
+</div>

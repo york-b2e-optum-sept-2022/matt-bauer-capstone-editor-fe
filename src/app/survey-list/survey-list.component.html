@@ -1,0 +1,13 @@
+<div *ngIf="!selectedSurvey">
+  <div *ngFor="let survey of surveyList">
+    Title: {{survey.title}}
+    <button (click)="onViewSurveyClick(survey)">View Survey</button>
+    <button (click)="onDeleteSurveyClick(survey)">Delete Survey</button>
+  </div>
+</div>
+
+<div *ngIf="selectedSurvey">
+  <app-survey
+  [survey]="selectedSurvey"
+  ></app-survey>
+</div>

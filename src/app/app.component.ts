@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'matt-bauer-capstone-editor-fe';
+  viewOption: number | null = null
+
+  viewOptionClick(option: number) {
+    this.viewOption = option
+  }
+
+  viewAllOptionsClick() {
+    this.viewOption = null
+  }
 }

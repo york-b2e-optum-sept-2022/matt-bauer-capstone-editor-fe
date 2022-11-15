@@ -1,0 +1,15 @@
+<div *ngIf="!surveyCreated">
+  Title:
+  <input type="text" [(ngModel)]="surveyTitle">
+  <button (click)="onSurveyCreateClick()">Create</button>
+  <div>{{blankTitleMessage}}</div>
+</div>
+
+<div *ngIf="surveyCreated">
+<app-survey [title]="surveyTitle"></app-survey>
+
+
+
+<!--  <div>Survey Create</div>-->
+<!--  <app-create-question></app-create-question>-->
+</div>

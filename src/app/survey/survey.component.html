@@ -1,0 +1,13 @@
+<div>Survey Title in survey: {{selectedSurvey.title}}</div>
+
+<div *ngIf="selectedSurvey.questionList !== null">
+  <app-question *ngFor="let question of selectedSurvey.questionList"
+                [question]="question"
+                [survey]="selectedSurvey"
+  ></app-question>
+</div>
+
+<button *ngIf="!isCreatingQuestion" (click)="addNewQuestionClick()">Add New Question</button>
+
+<app-create-question (onCreateQuestion)="addQuestion($event)" *ngIf="isCreatingQuestion"></app-create-question>
+

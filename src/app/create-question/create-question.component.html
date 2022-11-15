@@ -1,0 +1,28 @@
+<div>
+  Question: <input type="text" [(ngModel)]="newQuestionPrompt"></div>
+<div>
+  Response Type: <select [(ngModel)]="newQuestionResponseType" >
+  <option placeholder="Choose type..." value=""></option>
+  <option  value="True/False">True/False</option>
+  <option value="Multiple Choice">Multiple Choice</option>
+  <option value="Text">Text</option>
+</select>
+  <button (click)="onTypeSelection()">Select</button>
+</div>
+<div *ngFor="let option of multipleChoiceList">
+  <div *ngIf="multipleChoiceList.indexOf(option) !== multipleChoiceList.length-1">
+    {{newQuestionResponseOptions[multipleChoiceList.indexOf(option)]}}
+    <button (click)="removeOption(newQuestionResponseOptions[multipleChoiceList.indexOf(option)])">Remove Option</button>
+  </div>
+  <div *ngIf="multipleChoiceList.indexOf(option) === multipleChoiceList.length-1" >
+    <input placeholder="Create option..." type="text" #input>
+    <button (click)="addOption(input.value)">Add Option</button>
+  </div>
+</div>
+<div>{{blankFieldMessage}}</div>
+<div>
+  <button (click)="onCreateQuestionClick()">Create Question</button>
+  <button>Cancel</button>
+</div>
+
+

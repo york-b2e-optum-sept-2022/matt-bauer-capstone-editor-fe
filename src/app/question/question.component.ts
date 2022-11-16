@@ -12,6 +12,7 @@ export class QuestionComponent implements OnInit {
 
   @Input() question!: IStage
   @Input() survey!: IProcess
+  onEditQuestion: IStage | null = null
 
   constructor(private processService: ProcessService) {
   }
@@ -20,7 +21,7 @@ export class QuestionComponent implements OnInit {
   }
 
   onEditClick() {
-
+this.onEditQuestion = {...this.question}
   }
 
   onDeleteClick() {
@@ -46,5 +47,17 @@ this.survey.questionList.splice(this.question.index, 1)
     this.survey.questionList[indexLeft].index = indexRight
     this.survey.questionList[indexRight].index = indexLeft
     this.processService.updateProcess(this.survey)
+  }
+
+  onEditQuestionEvent(event: IStage | null){
+    if(!event)
+      this.onEditQuestion = null
+    if(event) {
+      console.log("Here is the updated event: ",event)
+      let index = this.survey.questionList.findIndex(question => question.id === event.id)
+      this.survey.questionList[index] = event
+      this.processService.updateProcess(this.survey)
+      this.onEditQuestion = null
+    }
   }
 }

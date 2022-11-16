@@ -20,9 +20,13 @@
   </div>
 </div>
 <div>{{blankFieldMessage}}</div>
-<div>
+<div *ngIf="!questionToEdit">
   <button (click)="onCreateQuestionClick()">Create Question</button>
-  <button>Cancel</button>
+  <button (click)="onCreateCancel()">Cancel</button>
+</div>
+<div *ngIf="questionToEdit">
+  <button (click)="onEditSaveClick()">Save</button>
+  <button (click)="onEditCancelClick()">Cancel</button>
 </div>
 
 

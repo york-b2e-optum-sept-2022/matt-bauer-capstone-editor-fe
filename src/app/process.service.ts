@@ -53,4 +53,15 @@ export class ProcessService {
   )
   }
 
+  deleteProcess(process: IProcess) {
+    this.httpService.deleteProcess(process.id).pipe(first()).subscribe({
+        next: process => {
+          this.getAllProcesses()
+        },
+        error: err => {
+        }
+      }
+    )
+  }
+
 }

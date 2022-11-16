@@ -1,35 +1,43 @@
-<div>{{question.prompt}}</div>
-
-<div *ngIf="question.responseType === 'Text'">
-  {{question.index + 1}}.<br>
-  {{question.prompt}}<br>
-  Response: <input type="text" disabled>
-</div>
-
-<div *ngIf="question.responseType === 'Multiple Choice'">
-  {{question.index + 1}}.<br>
-  {{question.prompt}}<br>
-  <div  *ngFor="let option of question.responseOptions">
-    <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
-    <label for="{{option}}">
-      {{option}}
-    </label>
+<div *ngIf="!onEditQuestion">
+  <div *ngIf="question.responseType === 'Text'">
+    {{question.index + 1}}.<br>
+    {{question.prompt}}<br>
+    Response: <input type="text" disabled>
   </div>
-</div>
 
-<div *ngIf="question.responseType === 'True/False'">
-  {{question.index + 1}}.<br>
-  {{question.prompt}}<br>
-  <div  *ngFor="let option of question.responseOptions">
-    <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
-    <label for="{{option}}">
-      {{option}}
-    </label>
+  <div *ngIf="question.responseType === 'Multiple Choice'">
+    {{question.index + 1}}.<br>
+    {{question.prompt}}<br>
+    <div *ngFor="let option of question.responseOptions">
+      <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
+      <label for="{{option}}">
+        {{option}}
+      </label>
+    </div>
   </div>
-</div>
-<button (click)="onEditClick()">Edit</button>
-<button (click)="onDeleteClick()">Delete</button>
-<Button *ngIf="question.index !== 0" (click)="onUpClick()">Up</Button>
-<Button *ngIf="survey.questionList.length - 1 !== question.index" (click)="onDownClick()">Down</Button>
 
+  <div *ngIf="question.responseType === 'True/False'">
+    {{question.index + 1}}.<br>
+    {{question.prompt}}<br>
+    <div *ngFor="let option of question.responseOptions">
+      <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
+      <label for="{{option}}">
+        {{option}}
+      </label>
+    </div>
+  </div>
+  <button (click)="onEditClick()">Edit</button>
+  <button (click)="onDeleteClick()">Delete</button>
+  <Button *ngIf="question.index !== 0" (click)="onUpClick()">Up</Button>
+  <Button *ngIf="survey.questionList.length - 1 !== question.index" (click)="onDownClick()">Down</Button>
+</div>
+
+
+
+<!--                IS EDITING-->
+<div *ngIf="onEditQuestion">
+  <app-create-question
+  [questionToEdit]="onEditQuestion"
+  (onEditEvent)="onEditQuestionEvent($event)"></app-create-question>
+</div>
 

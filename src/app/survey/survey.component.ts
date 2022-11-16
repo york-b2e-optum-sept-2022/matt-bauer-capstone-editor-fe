@@ -15,6 +15,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   surveyList: IProcess[] = []
   onDestroy$ = new Subject()
   isCreatingQuestion: boolean = false
+  onEditTitle: string | null = null
 
   constructor(private processService: ProcessService) {
     this.processService.$surveyList.pipe(takeUntil(this.onDestroy$)).subscribe(
@@ -46,7 +47,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
 
   addQuestion(newQuestion: IStage) {
-    if (!this.selectedSurvey.questionList)
+    if (!this.selectedSurvey.questionList || this.selectedSurvey.questionList.length === 0)
       this.selectedSurvey.questionList = []
     if (this.selectedSurvey.questionList)
       newQuestion.index = this.selectedSurvey.questionList.length
@@ -54,5 +55,28 @@ export class SurveyComponent implements OnInit, OnDestroy {
     console.log(this.selectedSurvey)
     this.processService.updateProcess(this.selectedSurvey)
     this.isCreatingQuestion = false
+  }
+
+  onEditTitleClick() {
+    this.onEditTitle = this.selectedSurvey.title
+  }
+
+  onSaveTitleChanges() {
+    if(!this.onEditTitle)
+      return
+    if (!this.selectedSurvey.questionList)
+      this.selectedSurvey.questionList = []
+this.selectedSurvey.title = this.onEditTitle
+    this.processService.updateProcess(this.selectedSurvey)
+    this.onEditTitle = null
+  }
+
+  onCancelTitleChanges() {
+    this.onEditTitle = null
+  }
+
+  onCreateCancelClick(event: IStage | null) {
+    if(!event)
+      this.isCreatingQuestion = false
   }
 }

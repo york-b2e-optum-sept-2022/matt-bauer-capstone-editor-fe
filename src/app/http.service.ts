@@ -25,4 +25,10 @@ export class HttpService {
     return this.httpClient.put("http://localhost:8080/api/process", process
     ) as Observable<IProcess>
   }
+
+  deleteProcess(id: number): Observable<IProcess> {
+    return this.httpClient.delete(`http://localhost:8080/api/process?id=${id}`
+    ) as Observable<IProcess>
+  }
+
 }//end of class

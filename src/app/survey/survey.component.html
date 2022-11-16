@@ -1,4 +1,14 @@
-<div>Survey Title in survey: {{selectedSurvey.title}}</div>
+<div *ngIf="!onEditTitle">
+  <div>Survey Title in survey: {{selectedSurvey.title}}</div>
+  <button (click)="onEditTitleClick()">Change Name</button>
+</div>
+
+<div *ngIf="onEditTitle">
+  <div>Survey Title in survey: <input type="text" [(ngModel)]="onEditTitle"></div>
+  <button (click)="onSaveTitleChanges()">Save Changes</button>
+  <button (click)="onCancelTitleChanges()">Cancel</button>
+</div>
+
 
 <div *ngIf="selectedSurvey.questionList !== null">
   <app-question *ngFor="let question of selectedSurvey.questionList"
@@ -9,5 +19,8 @@
 
 <button *ngIf="!isCreatingQuestion" (click)="addNewQuestionClick()">Add New Question</button>
 
-<app-create-question (onCreateQuestion)="addQuestion($event)" *ngIf="isCreatingQuestion"></app-create-question>
+<app-create-question (onCreateQuestion)="addQuestion($event)"
+                     *ngIf="isCreatingQuestion"
+                     (onEditEvent)="onCreateCancelClick($event)"
+></app-create-question>
 

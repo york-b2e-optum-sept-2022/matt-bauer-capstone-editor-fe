@@ -37,6 +37,6 @@ export class SurveyListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteSurveyClick(survey: IProcess) {
-
+this.processService.deleteProcess(survey)
   }
 }

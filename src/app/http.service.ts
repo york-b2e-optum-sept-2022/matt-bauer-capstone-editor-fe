@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IProcess} from "./_Interfaces/IProcess";
 import {Observable} from "rxjs";
+import {IFinishedProcess} from "./_Interfaces/IFinishedProcess";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,11 @@ export class HttpService {
   deleteProcess(id: number): Observable<IProcess> {
     return this.httpClient.delete(`http://localhost:8080/api/process?id=${id}`
     ) as Observable<IProcess>
+  }
+
+  getAllResponses(): Observable<IFinishedProcess[]> {
+    return this.httpClient.get("http://localhost:8080/api/response"
+    ) as Observable<IFinishedProcess[]>
   }
 
 }//end of class

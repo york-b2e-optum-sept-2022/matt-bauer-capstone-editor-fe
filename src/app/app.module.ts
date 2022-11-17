@@ -9,6 +9,8 @@ import {FormsModule} from "@angular/forms";
 import { SurveyComponent } from './survey/survey.component';
 import { QuestionComponent } from './question/question.component';
 import { SurveyListComponent } from './survey-list/survey-list.component';
+import { ResponseListComponent } from './response-list/response-list.component';
+import { ResponseComponent } from './response/response.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { SurveyListComponent } from './survey-list/survey-list.component';
     CreateQuestionComponent,
     SurveyComponent,
     QuestionComponent,
-    SurveyListComponent
+    SurveyListComponent,
+    ResponseListComponent,
+    ResponseComponent
   ],
   imports: [
     BrowserModule,

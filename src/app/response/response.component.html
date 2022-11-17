@@ -1,0 +1,6 @@
+<div>{{response.surveyTitle}}</div>
+<div>{{response.dateFinished}}</div>
+<div *ngFor="let question of response.responseList">
+  <div>{{question.prompt}}</div>
+  <div>{{question.response}}</div>
+</div>

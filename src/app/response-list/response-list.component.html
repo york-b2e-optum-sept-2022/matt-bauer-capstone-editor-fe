@@ -1,0 +1,17 @@
+<div *ngIf="!selectedResponse">All finished Surveys</div>
+
+
+<div *ngIf="!selectedResponse">
+  <div *ngFor="let response of responseList">
+    Date: {{response.dateFinished}}
+    Title: {{response.surveyTitle}}
+    <button (click)="onViewResponseClick(response)">View Response</button>
+  </div>
+</div>
+
+<div *ngIf="selectedResponse">
+  <app-response
+    [response]="selectedResponse"
+  ></app-response>
+  <button (click)="onBackClick()">Back</button>
+</div>

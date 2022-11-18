@@ -1,32 +1,37 @@
-<div>
-  Question: <input type="text" [(ngModel)]="newQuestionPrompt"></div>
-<div>
-  Response Type: <select [(ngModel)]="newQuestionResponseType" >
-  <option placeholder="Choose type..." value=""></option>
-  <option  value="True/False">True/False</option>
-  <option value="Multiple Choice">Multiple Choice</option>
-  <option value="Text">Text</option>
-</select>
-  <button (click)="onTypeSelection()">Select</button>
-</div>
-<div *ngFor="let option of multipleChoiceList">
-  <div *ngIf="multipleChoiceList.indexOf(option) !== multipleChoiceList.length-1">
-    {{newQuestionResponseOptions[multipleChoiceList.indexOf(option)]}}
-    <button (click)="removeOption(newQuestionResponseOptions[multipleChoiceList.indexOf(option)])">Remove Option</button>
+<div class="card mt-3 p-1 d-flex flex-column justify-content-between">
+  <div class="m-3">
+    Question: <input type="text" [(ngModel)]="newQuestionPrompt">
   </div>
-  <div *ngIf="multipleChoiceList.indexOf(option) === multipleChoiceList.length-1" >
-    <input placeholder="Create option..." type="text" #input>
-    <button (click)="addOption(input.value)">Add Option</button>
+  <div class="m-3">
+    Response Type: <select [(ngModel)]="newQuestionResponseType">
+    <option placeholder="Choose type..." value=""></option>
+    <option value="True/False">True/False</option>
+    <option value="Multiple Choice">Multiple Choice</option>
+    <option value="Text">Text</option>
+  </select>
+    <button class="btn btn-outline-secondary btn-sm ms-2" (click)="onTypeSelection()">Select</button>
+  </div>
+  <div class="m-3" *ngFor="let option of multipleChoiceList">
+    <div *ngIf="multipleChoiceList.indexOf(option) !== multipleChoiceList.length-1">
+      {{newQuestionResponseOptions[multipleChoiceList.indexOf(option)]}}
+      <button (click)="removeOption(newQuestionResponseOptions[multipleChoiceList.indexOf(option)])">Remove Option
+      </button>
+    </div>
+    <div *ngIf="multipleChoiceList.indexOf(option) === multipleChoiceList.length-1">
+      <input placeholder="Create option..." type="text" #input>
+      <button (click)="addOption(input.value)">Add Option</button>
+    </div>
+  </div>
+  <div class="m-3" class="card-footer">
+    <div>{{blankFieldMessage}}</div>
+    <div *ngIf="!questionToEdit" class="d-flex justify-content-around">
+      <button (click)="onCreateQuestionClick()">Create Question</button>
+      <button (click)="onCreateCancel()">Cancel</button>
+    </div>
+    <div *ngIf="questionToEdit" class="d-flex justify-content-between">
+      <button (click)="onEditSaveClick()">Save</button>
+      <button (click)="onEditCancelClick()">Cancel</button>
+    </div>
   </div>
 </div>
-<div>{{blankFieldMessage}}</div>
-<div *ngIf="!questionToEdit">
-  <button (click)="onCreateQuestionClick()">Create Question</button>
-  <button (click)="onCreateCancel()">Cancel</button>
-</div>
-<div *ngIf="questionToEdit">
-  <button (click)="onEditSaveClick()">Save</button>
-  <button (click)="onEditCancelClick()">Cancel</button>
-</div>
-
 

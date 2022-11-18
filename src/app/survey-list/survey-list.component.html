@@ -1,13 +1,23 @@
-<div *ngIf="!selectedSurvey">
-  <div *ngFor="let survey of surveyList">
-    Title: {{survey.title}}
-    <button (click)="onViewSurveyClick(survey)">View Survey</button>
-    <button (click)="onDeleteSurveyClick(survey)">Delete Survey</button>
-  </div>
-</div>
+<div class="d-flex align-items-center flex-column">
+  <h2 *ngIf="!selectedSurvey">All Surveys</h2>
+  <h3 *ngIf="selectedSurvey">{{selectedSurvey.title}}</h3>
+  <div class="w-75">
+    <div *ngIf="!selectedSurvey">
+      <div *ngFor="let survey of surveyList" class="card d-flex flex-row justify-content-between align-items-center p-2 mb-1">
+        <div>
+          Title: {{survey.title}}
+        </div>
+        <div>
+          <button (click)="onViewSurveyClick(survey)">View Survey</button>
+          <button (click)="onDeleteSurveyClick(survey)">Delete Survey</button>
+        </div>
+      </div>
+    </div>
 
-<div *ngIf="selectedSurvey">
-  <app-survey
-  [survey]="selectedSurvey"
-  ></app-survey>
+    <div *ngIf="selectedSurvey">
+      <app-survey
+        [survey]="selectedSurvey"
+      ></app-survey>
+    </div>
+  </div>
 </div>

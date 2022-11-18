@@ -1,13 +1,11 @@
-<div *ngIf="!onEditQuestion">
+<div *ngIf="!onEditQuestion" class="card mt-3 p-1 d-flex flex-row justify-content-between">
   <div *ngIf="question.responseType === 'Text'">
-    {{question.index + 1}}.<br>
-    {{question.prompt}}<br>
+    <div>{{question.index + 1}}. {{question.prompt}}</div>
     Response: <input type="text" disabled>
   </div>
 
   <div *ngIf="question.responseType === 'Multiple Choice'">
-    {{question.index + 1}}.<br>
-    {{question.prompt}}<br>
+    <div>{{question.index + 1}}. {{question.prompt}}</div>
     <div *ngFor="let option of question.responseOptions">
       <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
       <label for="{{option}}">
@@ -17,8 +15,7 @@
   </div>
 
   <div *ngIf="question.responseType === 'True/False'">
-    {{question.index + 1}}.<br>
-    {{question.prompt}}<br>
+    <div>{{question.index + 1}}. {{question.prompt}}</div>
     <div *ngFor="let option of question.responseOptions">
       <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
       <label for="{{option}}">
@@ -26,10 +23,16 @@
       </label>
     </div>
   </div>
-  <button (click)="onEditClick()">Edit</button>
-  <button (click)="onDeleteClick()">Delete</button>
-  <Button *ngIf="question.index !== 0" (click)="onUpClick()">Up</Button>
-  <Button *ngIf="survey.questionList.length - 1 !== question.index" (click)="onDownClick()">Down</Button>
+  <div class="d-flex flex-column">
+    <div>
+      <button (click)="onEditClick()"><i class="bi bi-pencil-square"></i></button>
+      <button (click)="onDeleteClick()">Delete</button>
+    </div>
+    <div class="d-flex flex-column m-2 align-content-start">
+      <Button *ngIf="question.index !== 0" (click)="onUpClick()"><i class="bi bi-caret-up-fill"></i></Button>
+      <Button *ngIf="survey.questionList.length - 1 !== question.index" (click)="onDownClick()"><i class="bi bi-caret-down-fill"></i></Button>
+    </div>
+  </div>
 </div>
 
 

@@ -1,12 +1,12 @@
-<div *ngIf="!onEditTitle">
-  <div>Survey Title in survey: {{selectedSurvey.title}}</div>
-  <button (click)="onEditTitleClick()">Change Name</button>
+<div *ngIf="!onEditTitle" class="d-flex flex-row">
+  <div>Survey Title: {{selectedSurvey.title}}</div>
+  <button class="ms-2 border-0 bg-transparent" (click)="onEditTitleClick()"><i class="bi bi-pencil-square"></i></button>
 </div>
 
-<div *ngIf="onEditTitle">
-  <div>Survey Title in survey: <input type="text" [(ngModel)]="onEditTitle"></div>
-  <button (click)="onSaveTitleChanges()">Save Changes</button>
-  <button (click)="onCancelTitleChanges()">Cancel</button>
+<div *ngIf="onEditTitle" class="d-flex justify-content-start">
+  <div>New Title: <input type="text" [(ngModel)]="onEditTitle"></div>
+  <button class="ms-2 btn btn-sm" (click)="onSaveTitleChanges()"><i class="bi bi-check-square"></i></button>
+  <button calss="btn btn-sm" (click)="onCancelTitleChanges()"><i class="bi bi-x-square"></i></button>
 </div>
 
 
@@ -16,9 +16,9 @@
                 [survey]="selectedSurvey"
   ></app-question>
 </div>
-
-<button *ngIf="!isCreatingQuestion" (click)="addNewQuestionClick()">Add New Question</button>
-
+<div class="d-flex justify-content-center">
+  <button *ngIf="!isCreatingQuestion" (click)="addNewQuestionClick()"><i class="bi bi-plus-circle"></i></button>
+</div>
 <app-create-question (onCreateQuestion)="addQuestion($event)"
                      *ngIf="isCreatingQuestion"
                      (onEditEvent)="onCreateCancelClick($event)"

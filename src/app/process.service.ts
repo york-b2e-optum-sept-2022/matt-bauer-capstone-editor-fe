@@ -10,7 +10,7 @@ import {IStage} from "./_Interfaces/IStage";
 export class ProcessService {
 
   $surveyList = new BehaviorSubject<IProcess[]>([])
-  $newQuestion = new BehaviorSubject<IStage | null>(null)
+  $httpErrorMessage = new BehaviorSubject<string | null>(null)
 
   constructor(private httpService: HttpService) {
     this.getAllProcesses()
@@ -19,13 +19,16 @@ export class ProcessService {
   createProcess(newProcessTitle: string) {
     this.httpService.createProcess(newProcessTitle).pipe(first()).subscribe({
         next: process => {
-          console.log("new survey: ", process)
           let processList = [...this.$surveyList.getValue()]
           processList.push(process)
           this.$surveyList.next(processList)
-          console.log("from create method", this.$surveyList.getValue())
         },
         error: err => {
+          if(err.status === 409){
+            this.$httpErrorMessage.next("Survey Title is not unique")
+            return
+          }
+          this.$httpErrorMessage.next("An unknown error occurred, please try again later")
         }
       }
     )
@@ -37,6 +40,7 @@ export class ProcessService {
         this.$surveyList.next(list)
       },
       error: err => {
+        this.$httpErrorMessage.next("An unknown error occurred, please try again later")
       }
     }
     )
@@ -48,6 +52,12 @@ export class ProcessService {
         this.getAllProcesses()
       },
       error: err => {
+        if(err.status === 409){
+          this.$httpErrorMessage.next("Survey Title is not unique")
+          return
+        }
+        this.$httpErrorMessage.next("An unknown error occurred, please try again later")
+
       }
     }
   )
@@ -59,6 +69,7 @@ export class ProcessService {
           this.getAllProcesses()
         },
         error: err => {
+          this.$httpErrorMessage.next("An unknown error occurred, please try again later")
         }
       }
     )

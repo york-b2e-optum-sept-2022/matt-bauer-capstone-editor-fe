@@ -8,9 +8,7 @@
     <div>{{question.index + 1}}. {{question.prompt}}</div>
     <div *ngFor="let option of question.responseOptions">
       <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
-      <label for="{{option}}">
-        {{option}}
-      </label>
+      <label class="ms-2" for="{{option}}">{{option}}</label>
     </div>
   </div>
 
@@ -23,14 +21,14 @@
       </label>
     </div>
   </div>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-row">
+    <div class="d-flex flex-column m-2 justify-content-center">
+      <Button class="border-0 bg-transparent" *ngIf="question.index !== 0" (click)="onUpClick()"><i class="bi bi-caret-up-fill"></i></Button>
+      <Button class="border-0 bg-transparent" *ngIf="survey.questionList.length - 1 !== question.index" (click)="onDownClick()"><i class="bi bi-caret-down-fill"></i></Button>
+    </div>
     <div>
       <button (click)="onEditClick()"><i class="bi bi-pencil-square"></i></button>
-      <button (click)="onDeleteClick()">Delete</button>
-    </div>
-    <div class="d-flex flex-column m-2 align-content-start">
-      <Button *ngIf="question.index !== 0" (click)="onUpClick()"><i class="bi bi-caret-up-fill"></i></Button>
-      <Button *ngIf="survey.questionList.length - 1 !== question.index" (click)="onDownClick()"><i class="bi bi-caret-down-fill"></i></Button>
+      <button (click)="onDeleteClick()"><i class="bi bi-trash3"></i></button>
     </div>
   </div>
 </div>

@@ -15,6 +15,7 @@
     </div>
 
     <div *ngIf="selectedSurvey">
+      <button (click)="viewAllSurveysClick()">View All Surveys</button>
       <app-survey
         [survey]="selectedSurvey"
       ></app-survey>

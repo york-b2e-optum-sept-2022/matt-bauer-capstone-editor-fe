@@ -9,18 +9,30 @@
     <option value="Multiple Choice">Multiple Choice</option>
     <option value="Text">Text</option>
   </select>
-    <button class="btn btn-outline-secondary btn-sm ms-2" (click)="onTypeSelection()">Select</button>
   </div>
-  <div class="m-3" *ngFor="let option of multipleChoiceList">
-    <div *ngIf="multipleChoiceList.indexOf(option) !== multipleChoiceList.length-1">
-      {{newQuestionResponseOptions[multipleChoiceList.indexOf(option)]}}
-      <button (click)="removeOption(newQuestionResponseOptions[multipleChoiceList.indexOf(option)])">Remove Option
-      </button>
+  <div *ngIf="newQuestionResponseType === 'Multiple Choice'">
+    <div class="m-3" *ngFor="let option of newQuestionResponseOptions">
+
+      <div *ngIf="optionToEdit !== option">
+        {{option}}
+        <button class="ms-2 border-0 bg-transparent" (click)="onEditOptionClick(option)"><i class="bi bi-pencil-square"></i></button>
+        <button class="ms-2 border-0 bg-transparent" (click)="removeOption(option)"><i class="bi bi-trash3"></i>
+        </button>
+      </div>
+      <div *ngIf="optionToEdit === option">
+        <input type="text" [(ngModel)]="newQuestionMCOption">
+        <button class="ms-2 border-0 bg-transparent" (click)="onSaveOptionClick(option)"><i class="bi bi-check-square"></i></button>
+        <button class="ms-2 border-0 bg-transparent" (click)="cancelOptionEditClick()"><i class="bi bi-x-square"></i>
+        </button>
+      </div>
+
     </div>
-    <div *ngIf="multipleChoiceList.indexOf(option) === multipleChoiceList.length-1">
-      <input placeholder="Create option..." type="text" #input>
-      <button (click)="addOption(input.value)">Add Option</button>
+
+    <div *ngIf="!optionToEdit">
+      <input placeholder="Create option..." type="text" [(ngModel)]="newQuestionMCOption">
+      <button class="btn btn-link-dark" (click)="addOption()">Add Option</button>
     </div>
+  </div>
   </div>
   <div class="m-3" class="card-footer">
     <div>{{blankFieldMessage}}</div>
@@ -33,5 +45,4 @@
       <button (click)="onEditCancelClick()">Cancel</button>
     </div>
   </div>
-</div>
 

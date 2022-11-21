@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, first} from "rxjs";
-import {IProcess} from "./_Interfaces/IProcess";
 import {HttpService} from "./http.service";
 import {IFinishedProcess} from "./_Interfaces/IFinishedProcess";
 
@@ -10,7 +9,7 @@ import {IFinishedProcess} from "./_Interfaces/IFinishedProcess";
 export class ResponseService {
 
   $responseList = new BehaviorSubject<IFinishedProcess[]>([])
-
+  $httpErrorMessage = new BehaviorSubject<string | null>(null)
 
   constructor(private httpService: HttpService) {
     this.getAllResponses()
@@ -22,7 +21,9 @@ export class ResponseService {
       next: list => {
         this.$responseList.next(list)
       },
-      error: err => {}
+      error: err => {
+        this.$httpErrorMessage.next("An unknown error occurred, please try again later")
+      }
     })
   }
 }

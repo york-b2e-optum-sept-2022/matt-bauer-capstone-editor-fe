@@ -13,12 +13,14 @@ export class SurveyListComponent implements OnInit, OnDestroy {
   surveyList: IProcess[] = []
   selectedSurvey: IProcess | null = null
   onDestroy$ = new Subject();
+  displayList: IProcess[] = [];
 
 
   constructor(private processService: ProcessService) {
     this.processService.$surveyList.pipe(takeUntil(this.onDestroy$)).subscribe(
       list => {
         this.surveyList = list
+        this.displayList = list
       }
     )
   }
@@ -43,4 +45,15 @@ this.processService.deleteProcess(survey)
   viewAllSurveysClick() {
     this.selectedSurvey = null
   }
+
+  filterSurveys(filterText: any) {
+    this.displayList = [...this.surveyList]
+    if (filterText.target.value === "" || filterText.target.value === null) {
+      return
+    }
+    const regexp = new RegExp(filterText.target.value, 'i')
+    let filteredList = this.displayList.filter(survey => regexp.test(survey.title))
+    this.displayList = filteredList
+  }
+
 }

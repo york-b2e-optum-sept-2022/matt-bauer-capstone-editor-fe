@@ -4,7 +4,7 @@
   </div>
   <div class="m-3">
     Response Type: <select [(ngModel)]="newQuestionResponseType">
-    <option placeholder="Choose type..." value=""></option>
+    <option value=""></option>
     <option value="True/False">True/False</option>
     <option value="Multiple Choice">Multiple Choice</option>
     <option value="Text">Text</option>
@@ -34,13 +34,13 @@
     </div>
   </div>
   </div>
-  <div class="m-3" class="card-footer">
+  <div class="card-footer m-3">
     <div>{{blankFieldMessage}}</div>
     <div *ngIf="!questionToEdit" class="d-flex justify-content-around">
       <button (click)="onCreateQuestionClick()">Create Question</button>
       <button (click)="onCreateCancel()">Cancel</button>
     </div>
-    <div *ngIf="questionToEdit" class="d-flex justify-content-between">
+    <div *ngIf="questionToEdit" class="d-flex justify-content-around">
       <button (click)="onEditSaveClick()">Save</button>
       <button (click)="onEditCancelClick()">Cancel</button>
     </div>

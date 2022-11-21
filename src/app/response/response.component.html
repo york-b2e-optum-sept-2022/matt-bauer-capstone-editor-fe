@@ -1,6 +1,7 @@
-<div>{{response.surveyTitle}}</div>
-<div>{{response.dateFinished}}</div>
-<div *ngFor="let question of response.responseList">
-  <div>{{question.prompt}}</div>
-  <div>{{question.response}}</div>
+<div>Title: {{response.surveyTitle}}</div>
+<div class="mt-1 mb-3">Date: {{response.dateFinished | date}}</div>
+<div *ngFor="let question of response.responseList" class="card mb-1">
+  <div class="m-3 ">Question {{response.responseList.indexOf(question) + 1}}.</div>
+  <div class="ms-5 mb-2">{{question.prompt}}</div>
+  <div class="ms-5 mb-3">{{question.response}}</div>
 </div>

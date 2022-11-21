@@ -1,15 +1,43 @@
 <div class="d-flex align-items-center flex-column">
+  <div *ngIf="!selectedResponse" class="d-flex justify-content-between w-50">
+    <div class="m-3">
+      <h6 class="text-center">Search by title:</h6>
+      <input
+        (input)="filterResponses($event)"
+        type="text" placeholder="Search..." class="form-control m-1">
+    </div>
+    <div class="d-flex flex-column justify-content-center m-3">
+      <h6 class="text-center">Filter Dates:</h6>
+      <div class="d-flex">
+        <div class="input-group mb-3 mx-3" style="width: 13rem">
+          <span class="input-group-text">From: </span>
+          <input type="date" class="form-control" [(ngModel)]="fromDate">
+        </div>
+        <div class="input-group mb-3 mx-3" style="width: 13rem;">
+          <span class="input-group-text">To: </span>
+          <input type="date" class="form-control" [(ngModel)]="toDate">
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button *ngIf="!isFilteringDates" (click)="onDateRangeSearchClick()">Search</button>
+        <button *ngIf="isFilteringDates" (click)="onClearClick()">Clear</button>
+      </div>
+    </div>
+  </div>
+
   <h2 *ngIf="!selectedResponse">All Survey Responses</h2>
   <h3 *ngIf="selectedResponse">{{selectedResponse.surveyTitle}}</h3>
 
   <div class="w-75">
     <div *ngIf="!selectedResponse">
-      <div *ngFor="let response of responseList" class="card d-flex flex-row justify-content-between align-items-center p-2 mb-1">
+      <div *ngFor="let response of displayList"
+           class="card d-flex flex-row justify-content-between align-items-center p-2 mb-1">
         <div class="d-flex justify-content-start w-75">
           <div class="w-25">Date: {{response.dateFinished | date}}</div>
           <div>Title: {{response.surveyTitle}}</div>
         </div>
-        <button (click)="onViewResponseClick(response)">View Response</button>
+        <button (click)="onViewResponseClick(response)">View</button>
       </div>
     </div>
 
@@ -17,7 +45,9 @@
       <app-response
         [response]="selectedResponse"
       ></app-response>
-      <button (click)="onBackClick()">Back</button>
+      <div class="d-flex justify-content-center">
+        <button (click)="onBackClick()">Back</button>
+      </div>
     </div>
   </div>
 </div>

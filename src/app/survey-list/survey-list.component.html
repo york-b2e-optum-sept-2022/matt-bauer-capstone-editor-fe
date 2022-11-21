@@ -1,15 +1,20 @@
 <div class="d-flex align-items-center flex-column">
+  <div *ngIf="!selectedSurvey">
+    <input
+      (input)="filterSurveys($event)"
+      type="text" placeholder="Search..." class="form-control m-1">
+  </div>
   <h2 *ngIf="!selectedSurvey">All Surveys</h2>
   <h3 *ngIf="selectedSurvey">{{selectedSurvey.title}}</h3>
   <div class="w-75">
     <div *ngIf="!selectedSurvey">
-      <div *ngFor="let survey of surveyList" class="card d-flex flex-row justify-content-between align-items-center p-2 mb-1">
+      <div *ngFor="let survey of displayList" class="card d-flex flex-row justify-content-between align-items-center p-2 mb-1">
         <div>
           Title: {{survey.title}}
         </div>
         <div>
-          <button (click)="onViewSurveyClick(survey)">View Survey</button>
-          <button (click)="onDeleteSurveyClick(survey)">Delete Survey</button>
+          <button (click)="onViewSurveyClick(survey)">View</button>
+          <button (click)="onDeleteSurveyClick(survey)">Delete</button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ResponseService} from "../response.service";
 import { Subject, takeUntil} from "rxjs";
 import {IFinishedProcess} from "../_Interfaces/IFinishedProcess";
@@ -8,7 +8,7 @@ import {IFinishedProcess} from "../_Interfaces/IFinishedProcess";
   templateUrl: './response-list.component.html',
   styleUrls: ['./response-list.component.css']
 })
-export class ResponseListComponent implements OnInit {
+export class ResponseListComponent implements OnDestroy {
   onDestroy$ = new Subject()
   responseList: IFinishedProcess[] = []
   selectedResponse: IFinishedProcess | null = null
@@ -24,7 +24,9 @@ this.displayList = list}
     )
   }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.onDestroy$.next(null)
+    this.onDestroy$.complete()
   }
 
   onViewResponseClick(response: IFinishedProcess) {

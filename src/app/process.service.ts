@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpService} from "./http.service";
 import {IProcess} from "./_Interfaces/IProcess";
 import {BehaviorSubject, first} from "rxjs";
-import {IStage} from "./_Interfaces/IStage";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +21,7 @@ export class ProcessService {
           let processList = [...this.$surveyList.getValue()]
           processList.push(process)
           this.$surveyList.next(processList)
+          this.$httpErrorMessage.next(null)
         },
         error: err => {
           if(err.status === 409){
@@ -39,7 +39,7 @@ export class ProcessService {
       next: list => {
         this.$surveyList.next(list)
       },
-      error: err => {
+      error: () => {
         this.$httpErrorMessage.next("An unknown error occurred, please try again later")
       }
     }
@@ -48,8 +48,9 @@ export class ProcessService {
 
   updateProcess(process: IProcess) {
   this.httpService.updateProcess(process).pipe(first()).subscribe({
-      next: process => {
+      next: () => {
         this.getAllProcesses()
+        this.$httpErrorMessage.next(null)
       },
       error: err => {
         if(err.status === 409){
@@ -65,10 +66,10 @@ export class ProcessService {
 
   deleteProcess(process: IProcess) {
     this.httpService.deleteProcess(process.id).pipe(first()).subscribe({
-        next: process => {
+        next: () => {
           this.getAllProcesses()
         },
-        error: err => {
+        error: () => {
           this.$httpErrorMessage.next("An unknown error occurred, please try again later")
         }
       }

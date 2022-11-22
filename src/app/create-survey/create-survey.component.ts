@@ -1,22 +1,32 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ProcessService} from "../process.service";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-create-survey',
   templateUrl: './create-survey.component.html',
   styleUrls: ['./create-survey.component.css']
 })
-export class CreateSurveyComponent implements OnInit {
+export class CreateSurveyComponent implements OnDestroy {
+  errorMessage: string | null = null
   surveyTitle: string | null = null
-  //TODO surveytitle hardcoded for app build
   surveyCreated: boolean = false
   blankTitleMessage: string | null = null
+  private onDestroy$ = new Subject()
 
   constructor(private processService: ProcessService) {
-
+this.processService.$httpErrorMessage.pipe(takeUntil(this.onDestroy$)).subscribe(
+  message => {this.errorMessage = message
+    if(this.surveyCreated)
+      return
+  this.surveyCreated = !message ? true : false}
+)
+    this.surveyCreated = false
   }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.onDestroy$.next(null)
+    this.onDestroy$.complete()
   }
 
   onSurveyCreateClick() {
@@ -24,7 +34,6 @@ export class CreateSurveyComponent implements OnInit {
       this.blankTitleMessage = "Title cannot be empty"
       return
     }
-    this.surveyCreated = true
     this.processService.createProcess(this.surveyTitle)
   }
 

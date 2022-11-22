@@ -1,15 +1,15 @@
 <div *ngIf="!surveyCreated" class="d-flex justify-content-center align-items-center vh-100">
   <div
-       class="h-25 w-25 bg-secondary d-flex flex-column justify-content-around align-items-center rounded-5">
-    <div>New Survey Title:</div>
+       class="h-25 w-25 bg-transparent d-flex flex-column justify-content-around align-items-center rounded-5">
+    <div class="text-light">New Survey Title:</div>
     <input type="text" [(ngModel)]="surveyTitle">
-    <button (click)="onSurveyCreateClick()">Create</button>
+    <button class="btn btn-outline-secondary bg-transparent" (click)="onSurveyCreateClick()">Create</button>
     <div class="text-light">{{blankTitleMessage}}</div>
   </div>
 </div>
 
   <div *ngIf="surveyCreated" class="d-flex justify-content-center">
-<div class="w-75">
+<div class="w-75 bg-black">
     <app-survey [title]="surveyTitle"></app-survey>
   </div>
 </div>

@@ -12,10 +12,10 @@ import {IStage} from "../_Interfaces/IStage";
 export class SurveyComponent implements OnInit, OnDestroy {
   @Input() survey!: IProcess | null
   selectedSurvey!: IProcess
-  surveyList: IProcess[] = []
   onDestroy$ = new Subject()
   isCreatingQuestion: boolean = false
   onEditTitle: string | null = null
+  isEditingTitle: boolean = false
 
   constructor(private processService: ProcessService) {
     this.processService.$surveyList.pipe(takeUntil(this.onDestroy$)).subscribe(
@@ -28,11 +28,20 @@ export class SurveyComponent implements OnInit, OnDestroy {
         this.selectedSurvey.questionList.sort((a, b) => a.index - b.index)
       }
     )
+
+    this.processService.$httpErrorMessage.pipe(takeUntil(this.onDestroy$)).subscribe(
+      message => {
+        this.isEditingTitle = message ? true : false
+        console.log(this.isEditingTitle)
+      }
+    )
+    this.isEditingTitle = false
   }
 
   ngOnInit(): void {
-    if (this.survey)
+    if (this.survey){
       this.selectedSurvey = this.survey
+    this.survey?.questionList.sort((a, b) => a.index - b.index)}
   }
 
   ngOnDestroy() {
@@ -59,6 +68,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   onEditTitleClick() {
     this.onEditTitle = this.selectedSurvey.title
+    this.isEditingTitle = true
   }
 
   onSaveTitleChanges() {
@@ -68,11 +78,11 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.selectedSurvey.questionList = []
 this.selectedSurvey.title = this.onEditTitle
     this.processService.updateProcess(this.selectedSurvey)
-    this.onEditTitle = null
   }
 
   onCancelTitleChanges() {
     this.onEditTitle = null
+    this.isEditingTitle = false
   }
 
   onCreateCancelClick(event: IStage | null) {

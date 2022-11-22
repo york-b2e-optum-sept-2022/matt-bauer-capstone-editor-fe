@@ -1,5 +1,5 @@
-<div>Title: {{response.surveyTitle}}</div>
-<div class="mt-1 mb-3">Date: {{response.dateFinished | date}}</div>
+<div class="text-light">Title: {{response.surveyTitle}}</div>
+<div class="mt-1 mb-3 text-light">Date: {{response.dateFinished | date}}</div>
 <div *ngFor="let question of response.responseList" class="card mb-1">
   <div class="m-3 ">Question {{response.responseList.indexOf(question) + 1}}.</div>
   <div class="ms-5 mb-2">{{question.prompt}}</div>

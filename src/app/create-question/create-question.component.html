@@ -35,14 +35,14 @@
   </div>
   </div>
   <div class="card-footer m-3">
-    <div>{{blankFieldMessage}}</div>
+    <div class="text-center text-light">{{blankFieldMessage}}</div>
     <div *ngIf="!questionToEdit" class="d-flex justify-content-around">
-      <button (click)="onCreateQuestionClick()">Create Question</button>
-      <button (click)="onCreateCancel()">Cancel</button>
+      <button class="btn btn-outline-success bg-transparent" (click)="onCreateQuestionClick()">Add Question</button>
+      <button class="btn btn-outline-secondary bg-transparent" (click)="onCreateCancel()">Cancel</button>
     </div>
     <div *ngIf="questionToEdit" class="d-flex justify-content-around">
-      <button (click)="onEditSaveClick()">Save</button>
-      <button (click)="onEditCancelClick()">Cancel</button>
+      <button class="btn btn-outline-success bg-transparent" (click)="onEditSaveClick()">Save</button>
+      <button class="btn btn-outline-secondary bg-transparent" (click)="onEditCancelClick()">Cancel</button>
     </div>
   </div>
 

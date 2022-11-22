@@ -4,8 +4,8 @@
       (input)="filterSurveys($event)"
       type="text" placeholder="Search..." class="form-control m-1">
   </div>
-  <h2 *ngIf="!selectedSurvey">All Surveys</h2>
-  <h3 *ngIf="selectedSurvey">{{selectedSurvey.title}}</h3>
+  <h2 *ngIf="!selectedSurvey" class="text-light">All Surveys</h2>
+  <h3 class="text-light" *ngIf="selectedSurvey">{{selectedSurvey.title}}</h3>
   <div class="w-75">
     <div *ngIf="!selectedSurvey">
       <div *ngFor="let survey of displayList" class="card d-flex flex-row justify-content-between align-items-center p-2 mb-1">
@@ -13,14 +13,14 @@
           Title: {{survey.title}}
         </div>
         <div>
-          <button (click)="onViewSurveyClick(survey)">View</button>
-          <button (click)="onDeleteSurveyClick(survey)">Delete</button>
+          <button class="btn btn-link-dark btn-sm me-3" (click)="onViewSurveyClick(survey)">View</button>
+          <button class="border-0 bg-transparent" (click)="onDeleteSurveyClick(survey)"><i class="bi bi-trash3"></i></button>
         </div>
       </div>
     </div>
 
     <div *ngIf="selectedSurvey">
-      <button (click)="viewAllSurveysClick()">View All Surveys</button>
+      <button class="btn btn-outline-secondary" (click)="viewAllSurveysClick()">View All Surveys</button>
       <app-survey
         [survey]="selectedSurvey"
       ></app-survey>

@@ -1,24 +1,24 @@
-<div class="d-flex flex-column justify-content-center vh-100" *ngIf="!viewOption">
-  <h1 class="text-center m-4">Informed</h1>
+<div class="d-flex flex-column justify-content-center vh-100 bg-black" *ngIf="!viewOption">
+  <h1 class="text-center m-4 text-light">Informed</h1>
   <div class="d-flex align-items-center justify-content-center">
     <div class="d-flex flex-column ">
-      <button class="btn btn-lg btn-info m-3" (click)="viewOptionClick(1)">View All Surveys</button>
-      <button class="btn btn-lg btn-info m-3" (click)="viewOptionClick(2)">View All Responses</button>
-      <button class="btn btn-lg btn-info m-3" (click)="viewOptionClick(3)">Create New Survey</button>
+      <button class="btn btn-lg btn-outline-secondary m-3" (click)="viewOptionClick(1)">View All Surveys</button>
+      <button class="btn btn-lg btn-outline-secondary m-3" (click)="viewOptionClick(2)">View All Responses</button>
+      <button class="btn btn-lg btn-outline-secondary m-3" (click)="viewOptionClick(3)">Create New Survey</button>
     </div>
   </div>
 </div>
 
-<div class="vh-100"  *ngIf="viewOption">
- <nav class="navbar shadow sticky-top bg-info d-flex justify-content-center flex-column">
-  <h1 class="text-center m-4">Informed</h1>
-  <div class=" w-100 d-flex flex-row justify-content-start">
-    <button class="btn btn-sm btn-primary" (click)="viewAllOptionsClick()">View All Options</button>
+<div class=" bg-black"  *ngIf="viewOption">
+ <nav class="navbar shadow bg-black d-flex justify-content-center flex-column">
+   <button class="btn btn-outline-secondary btn-lg" disabled><h1 class="text-center m-4 text-light">Informed</h1></button>
+   <div class=" w-100 d-flex flex-row justify-content-start">
+    <button class="btn btn-sm btn-outline-secondary ms-3" (click)="viewAllOptionsClick()">View All Options</button>
   </div>
-
-
  </nav>
-  {{httpErrorMessage}}
+  <div class="text-light text-center">
+    {{httpErrorMessage}}
+  </div>
 
   <div *ngIf="viewOption===1">
     <app-survey-list></app-survey-list>

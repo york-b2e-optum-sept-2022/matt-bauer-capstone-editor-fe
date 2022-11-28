@@ -39,7 +39,7 @@ export class SurveyListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteSurveyClick(survey: IProcess) {
-this.processService.deleteProcess(survey)
+    this.processService.deleteProcess(survey)
   }
 
   viewAllSurveysClick() {
@@ -48,12 +48,10 @@ this.processService.deleteProcess(survey)
 
   filterSurveys(filterText: any) {
     this.displayList = [...this.surveyList]
-    if (filterText.target.value === "" || filterText.target.value === null) {
+    if (filterText.target.value === "" || filterText.target.value === null)
       return
-    }
     const regexp = new RegExp(filterText.target.value, 'i')
-    let filteredList = this.displayList.filter(survey => regexp.test(survey.title))
-    this.displayList = filteredList
+    this.displayList = this.displayList.filter(survey => regexp.test(survey.title))
   }
 
 }

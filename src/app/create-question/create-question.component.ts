@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ProcessService} from "../process.service";
 import {IStage} from "../_Interfaces/IStage";
 
 @Component({
@@ -19,15 +18,12 @@ export class CreateQuestionComponent implements OnInit {
   newQuestionMCOption: string | null = null
   optionToEdit: string | null = null
 
-  constructor(private processService: ProcessService) {
-  }
-
   ngOnInit(): void {
     if (this.questionToEdit) {
       this.newQuestionPrompt = this.questionToEdit.prompt
       this.newQuestionResponseType = this.questionToEdit.responseType
       this.newQuestionResponseOptions = this.questionToEdit.responseOptions
-      if(this.newQuestionResponseType === "True/False")
+      if (this.newQuestionResponseType === "True/False")
         this.newQuestionResponseOptions = []
     }
   }
@@ -47,7 +43,7 @@ export class CreateQuestionComponent implements OnInit {
     this.newQuestionResponseOptions.splice(index, 1)
   }
 
-  dataValidation(){
+  dataValidation() {
     this.blankFieldMessage = null
     if (!this.newQuestionPrompt) {
       this.blankFieldMessage = "Question prompt cannot be blank"
@@ -71,28 +67,27 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   onCreateQuestionClick() {
-    if(!this.dataValidation())
+    if (!this.dataValidation())
       return
-    if(this.newQuestionPrompt && this.newQuestionResponseType)
-    this.onCreateQuestion.emit({
-      id: -1,
-      index: 0,
-      prompt: this.newQuestionPrompt,
-      responseType: this.newQuestionResponseType,
-      responseOptions: this.newQuestionResponseOptions,
-    })
+    if (this.newQuestionPrompt && this.newQuestionResponseType)
+      this.onCreateQuestion.emit({
+        id: -1,
+        index: 0,
+        prompt: this.newQuestionPrompt,
+        responseType: this.newQuestionResponseType,
+        responseOptions: this.newQuestionResponseOptions,
+      })
   }
 
-
   onEditSaveClick() {
-    if(!this.dataValidation())
+    if (!this.dataValidation())
       return
-    if(this.newQuestionPrompt && this.newQuestionResponseType)
-    if(this.questionToEdit) {
-      this.questionToEdit.prompt = this.newQuestionPrompt
-      this.questionToEdit.responseOptions = this.newQuestionResponseOptions
-      this.questionToEdit.responseType = this.newQuestionResponseType
-    }
+    if (this.newQuestionPrompt && this.newQuestionResponseType)
+      if (this.questionToEdit) {
+        this.questionToEdit.prompt = this.newQuestionPrompt
+        this.questionToEdit.responseOptions = this.newQuestionResponseOptions
+        this.questionToEdit.responseType = this.newQuestionResponseType
+      }
     this.onEditEvent.emit(this.questionToEdit)
   }
 
@@ -105,7 +100,7 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   onEditOptionClick(option: string) {
-this.optionToEdit = option
+    this.optionToEdit = option
     this.newQuestionMCOption = option
   }
 
@@ -115,14 +110,12 @@ this.optionToEdit = option
   }
 
   onSaveOptionClick(option: string) {
-    console.log("click reached")
     let index = this.newQuestionResponseOptions.findIndex(item => item === option)
-    console.log(index)
-    if (index !== -1){
-      if(this.newQuestionMCOption)
-      this.newQuestionResponseOptions[index] = this.newQuestionMCOption
-      console.log(this.newQuestionResponseOptions)
-    this.newQuestionMCOption = null
-    this.optionToEdit = null}
+    if (index !== -1) {
+      if (this.newQuestionMCOption)
+        this.newQuestionResponseOptions[index] = this.newQuestionMCOption
+      this.newQuestionMCOption = null
+      this.optionToEdit = null
+    }
   }
-}//end of class
+}

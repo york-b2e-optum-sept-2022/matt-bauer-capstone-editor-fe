@@ -16,12 +16,10 @@ export class AppComponent {
     this.processService.$httpErrorMessage.subscribe(
       message => this.httpErrorMessage = message
     )
-
     this.responseService.$httpErrorMessage.subscribe(
       message => this.httpErrorMessage = message
     )
   }
-
 
   viewOptionClick(option: number) {
     this.viewOption = option

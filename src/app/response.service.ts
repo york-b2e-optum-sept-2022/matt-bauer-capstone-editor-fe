@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, first} from "rxjs";
 import {HttpService} from "./http.service";
 import {IFinishedProcess} from "./_Interfaces/IFinishedProcess";
@@ -15,15 +15,15 @@ export class ResponseService {
     this.getAllResponses()
   }
 
-
-  getAllResponses(){
+  getAllResponses() {
     this.httpService.getAllResponses().pipe(first()).subscribe({
-      next: list => {
-        this.$responseList.next(list)
-      },
-      error: err => {
-        this.$httpErrorMessage.next("An unknown error occurred, please try again later")
+        next: list => {
+          this.$responseList.next(list)
+        },
+        error: () => {
+          this.$httpErrorMessage.next("An unknown error occurred, please try again later")
+        }
       }
-    })
+    )
   }
 }

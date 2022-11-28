@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {IResponse} from "../_Interfaces/IResponse";
+import {Component, Input} from '@angular/core';
 import {IFinishedProcess} from "../_Interfaces/IFinishedProcess";
 
 @Component({
@@ -7,12 +6,9 @@ import {IFinishedProcess} from "../_Interfaces/IFinishedProcess";
   templateUrl: './response.component.html',
   styleUrls: ['./response.component.css']
 })
-export class ResponseComponent implements OnInit {
+export class ResponseComponent{
 
-  constructor() { }
   @Input() response!: IFinishedProcess
 
-  ngOnInit(): void {
-  }
 
 }

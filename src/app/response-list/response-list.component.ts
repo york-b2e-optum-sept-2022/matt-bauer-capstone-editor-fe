@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ResponseService} from "../response.service";
-import { Subject, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {IFinishedProcess} from "../_Interfaces/IFinishedProcess";
 
 @Component({
@@ -19,8 +19,10 @@ export class ResponseListComponent implements OnDestroy {
 
   constructor(private responseService: ResponseService) {
     this.responseService.$responseList.pipe(takeUntil(this.onDestroy$)).subscribe(
-list => {this.responseList = list
-this.displayList = list}
+      list => {
+        this.responseList = list
+        this.displayList = list
+      }
     )
   }
 
@@ -39,23 +41,20 @@ this.displayList = list}
 
   filterResponses(filterText: any) {
     this.displayList = [...this.responseList]
-    if (filterText.target.value === "" || filterText.target.value === null) {
+    if (filterText.target.value === "" || filterText.target.value === null)
       return
-    }
     const regexp = new RegExp(filterText.target.value, 'i')
-    let filteredList = this.displayList.filter(response => regexp.test(response.surveyTitle))
-    this.displayList = filteredList
+    this.displayList = this.displayList.filter(response => regexp.test(response.surveyTitle))
   }
 
   onDateRangeSearchClick() {
     this.displayList = [...this.responseList]
-    let filteredList = this.displayList.filter(response => response.dateFinished >= this.fromDate
-    && response.dateFinished <= this.toDate)
-    this.displayList = filteredList
+    this.displayList = this.displayList.filter(response => response.dateFinished >= this.fromDate
+      && response.dateFinished <= this.toDate)
     this.isFilteringDates = true
   }
 
-  onClearClick(){
+  onClearClick() {
     this.displayList = [...this.responseList]
     this.isFilteringDates = false
     this.fromDate = new Date()

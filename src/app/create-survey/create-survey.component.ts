@@ -8,19 +8,19 @@ import {Subject, takeUntil} from "rxjs";
   styleUrls: ['./create-survey.component.css']
 })
 export class CreateSurveyComponent implements OnDestroy {
-  errorMessage: string | null = null
   surveyTitle: string | null = null
   surveyCreated: boolean = false
   blankTitleMessage: string | null = null
   private onDestroy$ = new Subject()
 
   constructor(private processService: ProcessService) {
-this.processService.$httpErrorMessage.pipe(takeUntil(this.onDestroy$)).subscribe(
-  message => {this.errorMessage = message
-    if(this.surveyCreated)
-      return
-  this.surveyCreated = !message ? true : false}
-)
+    this.processService.$httpErrorMessage.pipe(takeUntil(this.onDestroy$)).subscribe(
+      message => {
+        if (this.surveyCreated)
+          return
+        this.surveyCreated = !message
+      }
+    )
     this.surveyCreated = false
   }
 
@@ -30,7 +30,7 @@ this.processService.$httpErrorMessage.pipe(takeUntil(this.onDestroy$)).subscribe
   }
 
   onSurveyCreateClick() {
-    if(!this.surveyTitle) {
+    if (!this.surveyTitle) {
       this.blankTitleMessage = "Title cannot be empty"
       return
     }

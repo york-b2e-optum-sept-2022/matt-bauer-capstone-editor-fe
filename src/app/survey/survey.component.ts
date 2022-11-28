@@ -24,24 +24,24 @@ export class SurveyComponent implements OnInit, OnDestroy {
         if (!this.survey)
           this.selectedSurvey = list[selectedIndex]
         else this.selectedSurvey = this.survey
-        if(this.selectedSurvey.questionList)
-        this.selectedSurvey.questionList.sort((a, b) => a.index - b.index)
+        if (this.selectedSurvey.questionList)
+          this.selectedSurvey.questionList.sort((a, b) => a.index - b.index)
       }
     )
 
     this.processService.$httpErrorMessage.pipe(takeUntil(this.onDestroy$)).subscribe(
       message => {
-        this.isEditingTitle = message ? true : false
-        console.log(this.isEditingTitle)
+        this.isEditingTitle = !!message
       }
     )
     this.isEditingTitle = false
   }
 
   ngOnInit(): void {
-    if (this.survey){
+    if (this.survey) {
       this.selectedSurvey = this.survey
-    this.survey?.questionList.sort((a, b) => a.index - b.index)}
+      this.selectedSurvey.questionList.sort((a, b) => a.index - b.index)
+    }
   }
 
   ngOnDestroy() {
@@ -49,11 +49,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete()
   }
 
-
   addNewQuestionClick() {
     this.isCreatingQuestion = true
   }
-
 
   addQuestion(newQuestion: IStage) {
     if (!this.selectedSurvey.questionList || this.selectedSurvey.questionList.length === 0)
@@ -61,7 +59,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
     if (this.selectedSurvey.questionList)
       newQuestion.index = this.selectedSurvey.questionList.length
     this.selectedSurvey.questionList.push(newQuestion)
-    console.log(this.selectedSurvey)
     this.processService.updateProcess(this.selectedSurvey)
     this.isCreatingQuestion = false
   }
@@ -72,11 +69,11 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   onSaveTitleChanges() {
-    if(!this.onEditTitle)
+    if (!this.onEditTitle)
       return
     if (!this.selectedSurvey.questionList)
       this.selectedSurvey.questionList = []
-this.selectedSurvey.title = this.onEditTitle
+    this.selectedSurvey.title = this.onEditTitle
     this.processService.updateProcess(this.selectedSurvey)
   }
 
@@ -86,7 +83,7 @@ this.selectedSurvey.title = this.onEditTitle
   }
 
   onCreateCancelClick(event: IStage | null) {
-    if(!event)
+    if (!event)
       this.isCreatingQuestion = false
   }
 }

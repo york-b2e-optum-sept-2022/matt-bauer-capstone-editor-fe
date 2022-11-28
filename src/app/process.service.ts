@@ -24,7 +24,7 @@ export class ProcessService {
           this.$httpErrorMessage.next(null)
         },
         error: err => {
-          if(err.status === 409){
+          if (err.status === 409) {
             this.$httpErrorMessage.next("Survey Title is not unique")
             return
           }
@@ -36,32 +36,32 @@ export class ProcessService {
 
   getAllProcesses() {
     this.httpService.getAllProcesses().pipe(first()).subscribe({
-      next: list => {
-        this.$surveyList.next(list)
-      },
-      error: () => {
-        this.$httpErrorMessage.next("An unknown error occurred, please try again later")
+        next: list => {
+          this.$surveyList.next(list)
+        },
+        error: () => {
+          this.$httpErrorMessage.next("An unknown error occurred, please try again later")
+        }
       }
-    }
     )
   }
 
   updateProcess(process: IProcess) {
-  this.httpService.updateProcess(process).pipe(first()).subscribe({
-      next: () => {
-        this.getAllProcesses()
-        this.$httpErrorMessage.next(null)
-      },
-      error: err => {
-        if(err.status === 409){
-          this.$httpErrorMessage.next("Survey Title is not unique")
-          return
-        }
-        this.$httpErrorMessage.next("An unknown error occurred, please try again later")
+    this.httpService.updateProcess(process).pipe(first()).subscribe({
+        next: () => {
+          this.getAllProcesses()
+          this.$httpErrorMessage.next(null)
+        },
+        error: err => {
+          if (err.status === 409) {
+            this.$httpErrorMessage.next("Survey Title is not unique")
+            return
+          }
+          this.$httpErrorMessage.next("An unknown error occurred, please try again later")
 
+        }
       }
-    }
-  )
+    )
   }
 
   deleteProcess(process: IProcess) {

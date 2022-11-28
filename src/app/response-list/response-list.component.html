@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center flex-column">
-  <div *ngIf="!selectedResponse" class="d-flex justify-content-between w-50">
+  <div *ngIf="!selectedResponse && !allResponsesByTitle" class="d-flex justify-content-between w-50">
     <div class="m-3">
       <h6 class="text-center text-light">Search by title:</h6>
       <input
@@ -26,18 +26,27 @@
     </div>
   </div>
 
-  <h2 class="text-light" *ngIf="!selectedResponse">All Survey Responses</h2>
+  <h2 class="text-light" *ngIf="!selectedResponse && !allResponsesByTitle">All Survey Responses</h2>
   <h3 class="text-light" *ngIf="selectedResponse">{{selectedResponse.surveyTitle}}</h3>
+  <h3 class="text-light" *ngIf="allResponsesByTitle">{{allResponsesByTitle.title}} ({{allResponsesByTitle.numberOfResponses}} Responses)</h3>
 
   <div class="w-75">
-    <div *ngIf="!selectedResponse">
-      <div *ngFor="let response of displayList"
+    <div *ngIf="!selectedResponse && !allResponsesByTitle">
+      <div *ngFor="let response of displayList">
+        <div
            class="card d-flex flex-row justify-content-between align-items-center p-2 mb-1">
         <div class="d-flex justify-content-start w-75">
           <div class="w-25">Date: {{response.dateFinished | date}}</div>
           <div>Title: {{response.surveyTitle}}</div>
         </div>
-        <button class="btn btn-link-dark btn-sm me-3" (click)="onViewResponseClick(response)">View</button>
+        <button class="btn btn-link-dark btn-sm me-3" (click)="onViewOptionsClick(response.id)">View</button>
+        </div>
+        <div *ngIf="viewOptionID === response.id" class="d-flex justify-content-center align-items-center flex-column text-light">
+          <div>View this response or all {{response.surveyTitle}} survey responses?</div>
+          <div class="d-flex justify-content-evenly">
+            <button (click)="onViewResponseClick(response)" class="btn-outline-secondary btn m-3">View This Response</button>
+          <button (click)="onViewAllFromSurveyClick(response.surveyTitle)" class="btn-outline-secondary btn m-3">View all from this survey</button></div>
+        </div>
       </div>
     </div>
 
@@ -45,9 +54,33 @@
       <app-response
         [response]="selectedResponse"
       ></app-response>
-      <div class="d-flex justify-content-center">
-        <button class="btn-outline-secondary btn" (click)="onBackClick()">Back</button>
+    </div>
+
+
+
+
+
+
+    <div *ngIf="allResponsesByTitle" class="card">
+      Here is where the accum data will go
+      <div *ngFor="let q of allResponsesByTitle.question">
+        Question {{allResponsesByTitle.question.indexOf(q) + 1}}.
+        {{q.prompt}}
+        Responses:
+        <div *ngFor="let response of q.responses ">
+          {{response.response}}
+          {{response.percent}}
+        </div>
       </div>
     </div>
+
+
+
+
+
+
+      <div class="d-flex justify-content-center">
+        <button *ngIf="allResponsesByTitle || selectedResponse" class="btn-outline-secondary btn" (click)="onBackClick()">Back</button>
+      </div>
   </div>
 </div>

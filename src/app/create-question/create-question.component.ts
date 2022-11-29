@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IStage} from "../_Interfaces/IStage";
+import {RESPONSE_TYPE} from "../process.service";
 
 @Component({
   selector: 'app-create-question',
@@ -12,18 +13,19 @@ export class CreateQuestionComponent implements OnInit {
   @Input() questionToEdit!: IStage | null
   @Output() onCreateQuestion = new EventEmitter<IStage>()
   newQuestionPrompt: string | null = null
-  newQuestionResponseType: string | null = null
+  newQuestionResponseType: RESPONSE_TYPE | null = null
   newQuestionResponseOptions: string[] = []
   blankFieldMessage: string | null = null
   newQuestionMCOption: string | null = null
   optionToEdit: string | null = null
+  responseType!: RESPONSE_TYPE
 
   ngOnInit(): void {
     if (this.questionToEdit) {
       this.newQuestionPrompt = this.questionToEdit.prompt
       this.newQuestionResponseType = this.questionToEdit.responseType
       this.newQuestionResponseOptions = this.questionToEdit.responseOptions
-      if (this.newQuestionResponseType === "True/False")
+      if (this.newQuestionResponseType === RESPONSE_TYPE.TRUE_OR_FALSE)
         this.newQuestionResponseOptions = []
     }
   }
@@ -53,13 +55,13 @@ export class CreateQuestionComponent implements OnInit {
       this.blankFieldMessage = "Please select a response type"
       return false
     }
-    if (this.newQuestionResponseType === "Multiple Choice" && this.newQuestionResponseOptions.length === 0) {
+    if (this.newQuestionResponseType === RESPONSE_TYPE.MULTIPLE_CHOICE && this.newQuestionResponseOptions.length === 0) {
       this.blankFieldMessage = "Multiple Choice option cannot be empty"
       return false
     }
-    if (this.newQuestionResponseType !== "Multiple Choice")
+    if (this.newQuestionResponseType !== RESPONSE_TYPE.MULTIPLE_CHOICE)
       this.newQuestionResponseOptions = []
-    if (this.newQuestionResponseType === "True/False") {
+    if (this.newQuestionResponseType === RESPONSE_TYPE.TRUE_OR_FALSE) {
       this.newQuestionResponseOptions.push("True")
       this.newQuestionResponseOptions.push("False")
     }

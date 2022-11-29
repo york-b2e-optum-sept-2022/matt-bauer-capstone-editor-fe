@@ -3,6 +3,13 @@ import {HttpService} from "./http.service";
 import {IProcess} from "./_Interfaces/IProcess";
 import {BehaviorSubject, first} from "rxjs";
 
+
+export enum RESPONSE_TYPE {
+  "TEXT" = "TEXT",
+  "TRUE_OR_FALSE" = "TRUE/FALSE",
+  "MULTIPLE_CHOICE" = "MULTIPLE CHOICE"
+}
+
 @Injectable({
   providedIn: 'root'
 })

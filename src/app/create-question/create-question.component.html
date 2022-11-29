@@ -5,12 +5,12 @@
   <div class="m-3">
     Response Type: <select [(ngModel)]="newQuestionResponseType">
     <option value=""></option>
-    <option value="True/False">True/False</option>
-    <option value="Multiple Choice">Multiple Choice</option>
-    <option value="Text">Text</option>
+    <option value="TRUE/FALSE">True/False</option>
+    <option value="MULTIPLE CHOICE">Multiple Choice</option>
+    <option value="TEXT">Text</option>
   </select>
   </div>
-  <div *ngIf="newQuestionResponseType === 'Multiple Choice'">
+  <div *ngIf="newQuestionResponseType === 'MULTIPLE CHOICE'">
     <div class="m-3" *ngFor="let option of newQuestionResponseOptions">
 
       <div *ngIf="optionToEdit !== option">

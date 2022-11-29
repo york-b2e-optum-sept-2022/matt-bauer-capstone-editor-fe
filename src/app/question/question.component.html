@@ -1,10 +1,10 @@
 <div *ngIf="!onEditQuestion" class="card mt-3 p-1 d-flex flex-row justify-content-between">
-  <div *ngIf="question.responseType === 'Text'">
+  <div *ngIf="question.responseType === 'TEXT'">
     <div>{{question.index + 1}}. {{question.prompt}}</div>
     Response: <input type="text" disabled>
   </div>
 
-  <div *ngIf="question.responseType === 'Multiple Choice'">
+  <div *ngIf="question.responseType === 'MULTIPLE CHOICE'">
     <div>{{question.index + 1}}. {{question.prompt}}</div>
     <div *ngFor="let option of question.responseOptions">
       <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
@@ -12,11 +12,11 @@
     </div>
   </div>
 
-  <div *ngIf="question.responseType === 'True/False'">
+  <div *ngIf="question.responseType === 'TRUE/FALSE'">
     <div>{{question.index + 1}}. {{question.prompt}}</div>
     <div *ngFor="let option of question.responseOptions">
       <input disabled type="radio" name="show options" id="{{option}}" value="{{option}}">
-      <label for="{{option}}">
+      <label class="ms-2" for="{{option}}">
         {{option}}
       </label>
     </div>

@@ -3,6 +3,7 @@ import {ResponseService} from "../response.service";
 import {Subject, takeUntil} from "rxjs";
 import {IFinishedProcess} from "../_Interfaces/IFinishedProcess";
 import {IAccumulatedSurvey} from "../_Interfaces/IAccumulatedSurvey";
+import {RESPONSE_TYPE} from "../process.service";
 
 @Component({
   selector: 'app-response-list',
@@ -66,25 +67,27 @@ export class ResponseListComponent implements OnDestroy {
     this.toDate = new Date()
   }
 
-  onViewOptionsClick(id: number) {
-    this.viewOptionID = id
+  onViewOptionsClick(response: IFinishedProcess) {
+    let listLength = this.getResponseListByTitle(response.surveyTitle).length
+    if (listLength <= 1) {
+      this.onViewResponseClick(response)
+    } else this.viewOptionID = response.id
   }
 
   onViewAllFromSurveyClick(surveyTitle: string) {
-    let responseListByTitle = [...this.responseList]
     let responseByTitle = {} as IAccumulatedSurvey;
     responseByTitle.title = surveyTitle
-    responseListByTitle = responseListByTitle.filter(response => response.surveyTitle === surveyTitle)
+    let responseListByTitle = this.getResponseListByTitle(surveyTitle)
     responseByTitle = this.addResponses(responseListByTitle, responseByTitle)
     this.allResponsesByTitle = this.getUniqueResponses(responseByTitle)
     this.viewOptionID = -1
   }
 
   private addResponses(responseListByTitle: IFinishedProcess[], responseByTitle: IAccumulatedSurvey) {
+    responseByTitle.question = []
     for (let response of responseListByTitle) {
       for (let question of response.responseList) {
         let responseList = []
-        responseByTitle.question = []
         let prompt = responseByTitle.question.find(q => q.prompt === question.prompt)
         if (!prompt) {
           responseList.push({response: question.response, percent: 0})
@@ -112,15 +115,21 @@ export class ResponseListComponent implements OnDestroy {
         let numer = response.responses.filter(r => r.response === singleResponse.response).length
         singleResponse.percent = (numer / responseByTitle.numberOfResponses) * 100
       }
-      let responseSet = [...new Set(response.responses.map(r => r.response))]
-      let responseListSet = [] as { response: string, percent?: number }[]
-      responseSet.map(r => responseListSet.push({
-        response: r,
-        percent: response.responses.find(per => per.response === r)?.percent
-      }))
-      response.responses = responseListSet
+      if (response.responseType !== RESPONSE_TYPE.TEXT) {
+        let responseSet = [...new Set(response.responses.map(r => r.response))]
+        let responseListSet = [] as { response: string, percent?: number }[]
+        responseSet.map(r => responseListSet.push({
+          response: r,
+          percent: response.responses.find(per => per.response === r)?.percent
+        }))
+        response.responses = responseListSet
+      }
     }
     return responseByTitle
   }
 
+  private getResponseListByTitle(title: string) {
+    let responseListByTitle = [...this.responseList]
+    return responseListByTitle.filter(response => response.surveyTitle === title)
+  }
 }

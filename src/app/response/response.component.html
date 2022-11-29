@@ -1,7 +1,7 @@
 <div class="text-light">Title: {{response.surveyTitle}}</div>
 <div class="mt-1 mb-3 text-light">Date: {{response.dateFinished | date}}</div>
 <div *ngFor="let question of response.responseList" class="card mb-1">
-  <div class="m-3 ">Question {{response.responseList.indexOf(question) + 1}}.</div>
-  <div class="ms-5 mb-2">{{question.prompt}}</div>
-  <div class="ms-5 mb-3">{{question.response}}</div>
+  <div class="ms-2 mb-1 fw-bold">Question {{response.responseList.indexOf(question) + 1}}.</div>
+  <div class="ms-4 mb-2">{{question.prompt}}</div>
+  <div class="ms-4 mb-3">{{question.response}}</div>
 </div>

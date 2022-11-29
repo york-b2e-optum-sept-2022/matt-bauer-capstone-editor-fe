@@ -39,7 +39,7 @@
           <div class="w-25">Date: {{response.dateFinished | date}}</div>
           <div>Title: {{response.surveyTitle}}</div>
         </div>
-        <button class="btn btn-link-dark btn-sm me-3" (click)="onViewOptionsClick(response.id)">View</button>
+        <button class="btn btn-link-dark btn-sm me-3" (click)="onViewOptionsClick(response)">View</button>
         </div>
         <div *ngIf="viewOptionID === response.id" class="d-flex justify-content-center align-items-center flex-column text-light">
           <div>View this response or all {{response.surveyTitle}} survey responses?</div>
@@ -61,15 +61,24 @@
 
 
 
-    <div *ngIf="allResponsesByTitle" class="card">
-      Here is where the accum data will go
-      <div *ngFor="let q of allResponsesByTitle.question">
-        Question {{allResponsesByTitle.question.indexOf(q) + 1}}.
-        {{q.prompt}}
-        Responses:
-        <div *ngFor="let response of q.responses ">
-          {{response.response}}
-          {{response.percent}}
+    <div *ngIf="allResponsesByTitle" class="container mb-3">
+      <div class="row card mb-1" *ngFor="let q of allResponsesByTitle.question">
+        <div class="mt-1 mb-1 fw-bold">Question {{allResponsesByTitle.question.indexOf(q) + 1}}.</div>
+        <div class="mt-1 mb-2">{{q.prompt}}</div>
+        <dl class="row mb-0 ms-2">
+          <dd class="col-1 flex-nowrap d-flex">Percent:</dd> <dd class="col-11">Response:</dd>
+        </dl>
+        <div *ngIf="q.responseType !== 'TEXT'" class="mb-4">
+          <dl class="row mb-1 ms-3" *ngFor="let response of q.responses ">
+            <dd  class="col-1 flex-nowrap d-flex">{{response.percent  | number : '2.0-2'}}% </dd>
+            <dd class="col-11">{{response.response}}</dd>
+          </dl>
+        </div>
+        <div *ngIf="q.responseType === 'TEXT'" class="mb-4">
+          <dl class="row mb-1 ms-3" *ngFor="let response of q.responses ">
+            <dd  class="col-1 flex-nowrap d-flex text-secondary text-opacity-25">N/A</dd>
+            <dd class="col-11">{{response.response}}</dd>
+          </dl>
         </div>
       </div>
     </div>
@@ -80,7 +89,7 @@
 
 
       <div class="d-flex justify-content-center">
-        <button *ngIf="allResponsesByTitle || selectedResponse" class="btn-outline-secondary btn" (click)="onBackClick()">Back</button>
+        <button *ngIf="allResponsesByTitle || selectedResponse" class="btn-outline-secondary btn mt-3" (click)="onBackClick()">Back</button>
       </div>
   </div>
 </div>

@@ -6,6 +6,7 @@ export interface IAccumulatedSurvey {
   question: {
     prompt: string
     responseType: RESPONSE_TYPE
+    index: number
     responses: {
       response: string
       percent?: number

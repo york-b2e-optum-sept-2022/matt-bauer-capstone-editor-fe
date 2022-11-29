@@ -80,6 +80,7 @@ export class ResponseListComponent implements OnDestroy {
     let responseListByTitle = this.getResponseListByTitle(surveyTitle)
     responseByTitle = this.addResponses(responseListByTitle, responseByTitle)
     this.allResponsesByTitle = this.getUniqueResponses(responseByTitle)
+    this.allResponsesByTitle.question.sort((a, b) => a.index - b.index)
     this.viewOptionID = -1
   }
 
@@ -94,6 +95,7 @@ export class ResponseListComponent implements OnDestroy {
           responseByTitle.question.push(
             {
               prompt: question.prompt,
+              index: question.index,
               responses: responseList,
               responseType: question.responseType
             }

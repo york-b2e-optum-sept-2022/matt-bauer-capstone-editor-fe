@@ -29,6 +29,7 @@
   <h2 class="text-light" *ngIf="!selectedResponse && !allResponsesByTitle">All Survey Responses</h2>
   <h3 class="text-light" *ngIf="selectedResponse">{{selectedResponse.surveyTitle}}</h3>
   <h3 class="text-light" *ngIf="allResponsesByTitle">{{allResponsesByTitle.title}} ({{allResponsesByTitle.numberOfResponses}} Responses)</h3>
+  <div *ngIf="!responseList || responseList.length === 0" class="text-light text-center">No survey responses currently exist.</div>
 
   <div class="w-75">
     <div *ngIf="!selectedResponse && !allResponsesByTitle">

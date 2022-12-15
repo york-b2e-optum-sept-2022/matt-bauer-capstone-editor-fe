@@ -15,7 +15,7 @@ export class ResponseService {
     this.getAllResponses()
   }
 
-  getAllResponses() {
+  getAllResponses(): void {
     this.httpService.getAllResponses().pipe(first()).subscribe({
         next: list => {
           this.$responseList.next(list)

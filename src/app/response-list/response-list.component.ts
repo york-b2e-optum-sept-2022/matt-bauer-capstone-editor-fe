@@ -35,17 +35,17 @@ export class ResponseListComponent implements OnDestroy {
     this.onDestroy$.complete()
   }
 
-  onViewResponseClick(response: IFinishedProcess) {
+  onViewResponseClick(response: IFinishedProcess): void {
     this.selectedResponse = response
     this.viewOptionID = -1
   }
 
-  onBackClick() {
+  onBackClick(): void {
     this.selectedResponse = null
     this.allResponsesByTitle = null
   }
 
-  filterResponses(filterText: any) {
+  filterResponses(filterText: any): void {
     this.displayList = [...this.responseList]
     if (filterText.target.value === "" || filterText.target.value === null)
       return
@@ -53,28 +53,28 @@ export class ResponseListComponent implements OnDestroy {
     this.displayList = this.displayList.filter(response => regexp.test(response.surveyTitle))
   }
 
-  onDateRangeSearchClick() {
+  onDateRangeSearchClick(): void {
     this.displayList = [...this.responseList]
     this.displayList = this.displayList.filter(response => response.dateFinished >= this.fromDate
       && response.dateFinished <= this.toDate)
     this.isFilteringDates = true
   }
 
-  onClearClick() {
+  onClearClick(): void {
     this.displayList = [...this.responseList]
     this.isFilteringDates = false
     this.fromDate = new Date()
     this.toDate = new Date()
   }
 
-  onViewOptionsClick(response: IFinishedProcess) {
+  onViewOptionsClick(response: IFinishedProcess): void {
     let listLength = this.getResponseListByTitle(response.surveyTitle).length
     if (listLength <= 1) {
       this.onViewResponseClick(response)
     } else this.viewOptionID = response.id
   }
 
-  onViewAllFromSurveyClick(surveyTitle: string) {
+  onViewAllFromSurveyClick(surveyTitle: string): void {
     let responseByTitle = {} as IAccumulatedSurvey;
     responseByTitle.title = surveyTitle
     let responseListByTitle = this.getResponseListByTitle(surveyTitle)
@@ -84,7 +84,7 @@ export class ResponseListComponent implements OnDestroy {
     this.viewOptionID = -1
   }
 
-  private addResponses(responseListByTitle: IFinishedProcess[], responseByTitle: IAccumulatedSurvey) {
+  private addResponses(responseListByTitle: IFinishedProcess[], responseByTitle: IAccumulatedSurvey): IAccumulatedSurvey {
     responseByTitle.question = []
     for (let response of responseListByTitle) {
       for (let question of response.responseList) {
@@ -110,7 +110,7 @@ export class ResponseListComponent implements OnDestroy {
     return responseByTitle
   }
 
-  private getUniqueResponses(responseByTitle: IAccumulatedSurvey) {
+  private getUniqueResponses(responseByTitle: IAccumulatedSurvey): IAccumulatedSurvey {
     for (let response of responseByTitle.question) {
       responseByTitle.numberOfResponses = response.responses.length
       for (let singleResponse of response.responses) {
@@ -130,7 +130,7 @@ export class ResponseListComponent implements OnDestroy {
     return responseByTitle
   }
 
-  private getResponseListByTitle(title: string) {
+  private getResponseListByTitle(title: string):IFinishedProcess[] {
     let responseListByTitle = [...this.responseList]
     return responseListByTitle.filter(response => response.surveyTitle === title)
   }

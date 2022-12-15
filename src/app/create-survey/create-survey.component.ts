@@ -29,7 +29,7 @@ export class CreateSurveyComponent implements OnDestroy {
     this.onDestroy$.complete()
   }
 
-  onSurveyCreateClick() {
+  onSurveyCreateClick(): void {
     if (!this.surveyTitle) {
       this.blankTitleMessage = "Title cannot be empty"
       return

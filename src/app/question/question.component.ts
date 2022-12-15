@@ -17,18 +17,18 @@ export class QuestionComponent {
   constructor(private processService: ProcessService) {
   }
 
-  onEditClick() {
+  onEditClick(): void {
     this.onEditQuestion = {...this.question}
   }
 
-  onDeleteClick() {
+  onDeleteClick(): void {
     this.survey.questionList.splice(this.question.index, 1)
     for (let i = 0; i < this.survey.questionList.length; i++)
       this.survey.questionList[i].index = i
     this.processService.updateProcess(this.survey)
   }
 
-  onUpClick() {
+  onUpClick(): void {
     let indexRight = this.question.index
     let indexLeft = indexRight - 1
     this.survey.questionList[indexRight].index = indexLeft
@@ -36,7 +36,7 @@ export class QuestionComponent {
     this.processService.updateProcess(this.survey)
   }
 
-  onDownClick() {
+  onDownClick(): void {
     let indexLeft = this.question.index
     let indexRight = indexLeft + 1
     this.survey.questionList[indexLeft].index = indexRight
@@ -44,7 +44,7 @@ export class QuestionComponent {
     this.processService.updateProcess(this.survey)
   }
 
-  onEditQuestionEvent(event: IStage | null) {
+  onEditQuestionEvent(event: IStage | null): void {
     if (!event)
       this.onEditQuestion = null
     if (event) {

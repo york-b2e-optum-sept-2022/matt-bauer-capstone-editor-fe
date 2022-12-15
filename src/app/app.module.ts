@@ -26,7 +26,8 @@ import { ResponseComponent } from './response/response.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

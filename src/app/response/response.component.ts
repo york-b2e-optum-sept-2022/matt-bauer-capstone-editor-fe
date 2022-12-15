@@ -10,7 +10,7 @@ export class ResponseComponent implements OnInit{
 
   @Input() response!: IFinishedProcess
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.response.responseList.sort((a, b) => a.index - b.index)
   }
 

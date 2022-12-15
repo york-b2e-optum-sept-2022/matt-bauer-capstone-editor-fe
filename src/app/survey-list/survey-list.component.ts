@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {IProcess} from "../_Interfaces/IProcess";
 import {ProcessService} from "../process.service";
 import {Subject, takeUntil} from "rxjs";
@@ -8,7 +8,7 @@ import {Subject, takeUntil} from "rxjs";
   templateUrl: './survey-list.component.html',
   styleUrls: ['./survey-list.component.css']
 })
-export class SurveyListComponent implements OnInit, OnDestroy {
+export class SurveyListComponent implements OnDestroy {
 
   surveyList: IProcess[] = []
   selectedSurvey: IProcess | null = null
@@ -25,28 +25,25 @@ export class SurveyListComponent implements OnInit, OnDestroy {
     )
   }
 
-  ngOnInit(): void {
-  }
 
-
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.onDestroy$.next(null)
     this.onDestroy$.complete()
   }
 
-  onViewSurveyClick(survey: IProcess) {
+  onViewSurveyClick(survey: IProcess): void {
     this.selectedSurvey = survey
   }
 
-  onDeleteSurveyClick(survey: IProcess) {
+  onDeleteSurveyClick(survey: IProcess): void {
     this.processService.deleteProcess(survey)
   }
 
-  viewAllSurveysClick() {
+  viewAllSurveysClick(): void {
     this.selectedSurvey = null
   }
 
-  filterSurveys(filterText: any) {
+  filterSurveys(filterText: any): void {
     this.displayList = [...this.surveyList]
     if (filterText.target.value === "" || filterText.target.value === null)
       return

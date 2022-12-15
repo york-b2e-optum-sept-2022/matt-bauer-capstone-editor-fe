@@ -21,11 +21,11 @@ export class AppComponent {
     )
   }
 
-  viewOptionClick(option: number) {
+  viewOptionClick(option: number): void {
     this.viewOption = option
   }
 
-  viewAllOptionsClick() {
+  viewAllOptionsClick(): void {
     this.viewOption = null
   }
 }

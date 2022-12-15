@@ -44,16 +44,16 @@ export class SurveyComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.onDestroy$.next(null)
     this.onDestroy$.complete()
   }
 
-  addNewQuestionClick() {
+  addNewQuestionClick(): void {
     this.isCreatingQuestion = true
   }
 
-  addQuestion(newQuestion: IStage) {
+  addQuestion(newQuestion: IStage): void {
     if (!this.selectedSurvey.questionList || this.selectedSurvey.questionList.length === 0)
       this.selectedSurvey.questionList = []
     if (this.selectedSurvey.questionList)
@@ -63,26 +63,30 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.isCreatingQuestion = false
   }
 
-  onEditTitleClick() {
+  onEditTitleClick(): void {
     this.onEditTitle = this.selectedSurvey.title
     this.isEditingTitle = true
   }
 
-  onSaveTitleChanges() {
+  onSaveTitleChanges(): void {
+    this.processService.$httpErrorMessage.next(null)
     if (!this.onEditTitle)
       return
     if (!this.selectedSurvey.questionList)
       this.selectedSurvey.questionList = []
-    this.selectedSurvey.title = this.onEditTitle
-    this.processService.updateProcess(this.selectedSurvey)
+    let savedSurvey = {...this.selectedSurvey}
+    savedSurvey.title = this.onEditTitle
+    this.processService.updateProcess(savedSurvey)
+    if(this.processService.$httpErrorMessage.getValue())
+      this.onEditTitle = this.selectedSurvey.title
   }
 
-  onCancelTitleChanges() {
+  onCancelTitleChanges(): void {
     this.onEditTitle = null
     this.isEditingTitle = false
   }
 
-  onCreateCancelClick(event: IStage | null) {
+  onCreateCancelClick(event: IStage | null): void {
     if (!event)
       this.isCreatingQuestion = false
   }

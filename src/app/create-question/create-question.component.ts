@@ -18,7 +18,6 @@ export class CreateQuestionComponent implements OnInit {
   blankFieldMessage: string | null = null
   newQuestionMCOption: string | null = null
   optionToEdit: string | null = null
-  responseType!: RESPONSE_TYPE
 
   ngOnInit(): void {
     if (this.questionToEdit) {
@@ -30,7 +29,7 @@ export class CreateQuestionComponent implements OnInit {
     }
   }
 
-  addOption() {
+  addOption(): void {
     this.blankFieldMessage = null
     if (!this.newQuestionMCOption) {
       this.blankFieldMessage = "Option cannot be empty"
@@ -40,12 +39,12 @@ export class CreateQuestionComponent implements OnInit {
     this.newQuestionMCOption = null
   }
 
-  removeOption(option: string) {
+  removeOption(option: string): void {
     let index = this.newQuestionResponseOptions.indexOf(option)
     this.newQuestionResponseOptions.splice(index, 1)
   }
 
-  dataValidation() {
+  dataValidation(): boolean {
     this.blankFieldMessage = null
     if (!this.newQuestionPrompt) {
       this.blankFieldMessage = "Question prompt cannot be blank"
@@ -68,7 +67,7 @@ export class CreateQuestionComponent implements OnInit {
     return true
   }
 
-  onCreateQuestionClick() {
+  onCreateQuestionClick(): void {
     if (!this.dataValidation())
       return
     if (this.newQuestionPrompt && this.newQuestionResponseType)
@@ -81,7 +80,7 @@ export class CreateQuestionComponent implements OnInit {
       })
   }
 
-  onEditSaveClick() {
+  onEditSaveClick(): void {
     if (!this.dataValidation())
       return
     if (this.newQuestionPrompt && this.newQuestionResponseType)
@@ -93,25 +92,25 @@ export class CreateQuestionComponent implements OnInit {
     this.onEditEvent.emit(this.questionToEdit)
   }
 
-  onEditCancelClick() {
+  onEditCancelClick(): void {
     this.onEditEvent.emit(null)
   }
 
-  onCreateCancel() {
+  onCreateCancel(): void {
     this.onEditEvent.emit(null)
   }
 
-  onEditOptionClick(option: string) {
+  onEditOptionClick(option: string): void {
     this.optionToEdit = option
     this.newQuestionMCOption = option
   }
 
-  cancelOptionEditClick() {
+  cancelOptionEditClick(): void {
     this.optionToEdit = null
     this.newQuestionMCOption = null
   }
 
-  onSaveOptionClick(option: string) {
+  onSaveOptionClick(option: string): void {
     let index = this.newQuestionResponseOptions.findIndex(item => item === option)
     if (index !== -1) {
       if (this.newQuestionMCOption)

@@ -22,7 +22,7 @@ export class ProcessService {
     this.getAllProcesses()
   }
 
-  createProcess(newProcessTitle: string) {
+  createProcess(newProcessTitle: string): void {
     this.httpService.createProcess(newProcessTitle).pipe(first()).subscribe({
         next: process => {
           let processList = [...this.$surveyList.getValue()]
@@ -41,7 +41,7 @@ export class ProcessService {
     )
   }
 
-  getAllProcesses() {
+  getAllProcesses(): void {
     this.httpService.getAllProcesses().pipe(first()).subscribe({
         next: list => {
           this.$surveyList.next(list)
@@ -53,10 +53,13 @@ export class ProcessService {
     )
   }
 
-  updateProcess(process: IProcess) {
+  updateProcess(process: IProcess): void {
     this.httpService.updateProcess(process).pipe(first()).subscribe({
-        next: () => {
-          this.getAllProcesses()
+        next: process => {
+          let processList = [...this.$surveyList.getValue()]
+          let index = processList.findIndex(p => process.id === p.id)
+          processList.splice(index, 1, process)
+          this.$surveyList.next(processList)
           this.$httpErrorMessage.next(null)
         },
         error: err => {
@@ -71,10 +74,13 @@ export class ProcessService {
     )
   }
 
-  deleteProcess(process: IProcess) {
+  deleteProcess(process: IProcess): void {
     this.httpService.deleteProcess(process.id).pipe(first()).subscribe({
-        next: () => {
-          this.getAllProcesses()
+      next: () => {
+        let processList = [...this.$surveyList.getValue()]
+        let index = processList.findIndex(p => process.id === p.id)
+        processList.splice(index, 1)
+        this.$surveyList.next(processList)
         },
         error: () => {
           this.$httpErrorMessage.next("An unknown error occurred, please try again later")

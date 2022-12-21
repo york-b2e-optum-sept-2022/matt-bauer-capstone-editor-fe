@@ -9,31 +9,33 @@ import {IFinishedProcess} from "./_Interfaces/IFinishedProcess";
 })
 export class HttpService {
 
+  private hostURL: String = "http://10.110.87.54:8080"
+
   constructor(private httpClient: HttpClient) {
   }
 
   createProcess(title: string): Observable<IProcess> {
-    return this.httpClient.post("http://localhost:8080/api/process", title
+    return this.httpClient.post(this.hostURL + "/api/process", title
     ) as Observable<IProcess>
   }
 
   getAllProcesses(): Observable<IProcess[]> {
-    return this.httpClient.get("http://localhost:8080/api/process"
+    return this.httpClient.get(this.hostURL + "/api/process"
     ) as Observable<IProcess[]>
   }
 
   updateProcess(process: IProcess): Observable<IProcess> {
-    return this.httpClient.put("http://localhost:8080/api/process", process
+    return this.httpClient.put(this.hostURL + "/api/process", process
     ) as Observable<IProcess>
   }
 
   deleteProcess(id: number): Observable<IProcess> {
-    return this.httpClient.delete(`http://localhost:8080/api/process?id=${id}`
+    return this.httpClient.put(this.hostURL + `/api/process/delete?id=${id}`, {}
     ) as Observable<IProcess>
   }
 
   getAllResponses(): Observable<IFinishedProcess[]> {
-    return this.httpClient.get("http://localhost:8080/api/response"
+    return this.httpClient.get(this.hostURL + "/api/response"
     ) as Observable<IFinishedProcess[]>
   }
 }
